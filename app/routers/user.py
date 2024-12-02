@@ -5,8 +5,10 @@ from app.backend.db_depends import get_db
 # Аннотации, Модели БД и Pydantic.
 from typing import Annotated
 from app.shemas import CreateUser, UpdateUser
+from app.models.user import User
+from app.models.book import Book
 # # Функции работы с записями.
-from sqlalchemy import select
+from sqlalchemy import select, insert, delete, update
 #  Функция создания slug-строки
 
 

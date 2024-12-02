@@ -5,13 +5,14 @@ from sqlalchemy.orm import Session
 from app.backend.db_depends import get_db
 # Аннотации, Модели БД и Pydantic.
 from typing import Annotated
-from app.models import *
+from app.models.book import Book
+from app.models.user import User
 from app.shemas import CreateUser, UpdateUser, CreateBook, UpdateBook
 # Функции работы с записями.
 from sqlalchemy import insert, select, update, delete
 # Функция создания slug-строки
 from slugify import slugify
-from app.routers import user
+from app.routers.user import *
 
 router = APIRouter(prefix='/book', tags=['book'])
 
@@ -49,7 +50,8 @@ async def create_book(db: Annotated[Session, Depends(get_db)], create_book: Crea
                                     description=create_book.description,
                                     author=create_book.author,
                                     genre=create_book.genre,
-                                    completed=create_book.completed
+                                    completed=False,
+                                    user_id=user_id
     ))
     db.commit()
     return {'status_code': status.HTTP_201_CREATED, 'transaction': 'Successful'}

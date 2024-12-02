@@ -13,7 +13,8 @@ class User(Base):  # модель User, наследованная от ране
     firstname = Column(String)
     lastname = Column(String)
     age = Column(Integer)
-    books = relationship('Book', back_populates='user')  # объект связи с таблицей Book
+    books = relationship('Book', back_populates='user', cascade='save-update, merge, delete, delete-orphan')
+    # объект связи с таблицей Book
     # back_populates содержит в себе название объекта для связи
 
 

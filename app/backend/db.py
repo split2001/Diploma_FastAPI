@@ -10,3 +10,4 @@ SessionLocal = sessionmaker(bind=engine)  # создаем сессию связ
 
 class Base(DeclarativeBase):  # DeclarativeBase позволяет объединить наш класс и таблицу с БД
     pass
+

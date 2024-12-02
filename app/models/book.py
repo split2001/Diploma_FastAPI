@@ -22,7 +22,7 @@ class Book(Base):  # модель Task, наследованную от ране
     slug = Column(String)
 
     # объект связи с таблицей User
-    user = relationship('User', back_populates='books', cascade='save-update, merge, delete, delete-orphan')
+    user = relationship('User', back_populates='books')
     # back_populates содержит в себе название объекта для связи
 
 
