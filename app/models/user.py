@@ -3,19 +3,21 @@ from app.backend.db import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import CreateTable
 from slugify import slugify
+from app.models.association import user_book_association
 
 
 class User(Base):  # модель User, наследованная от ранее написанного Base
     __tablename__ = 'users'
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String)
+    username = Column(String, unique=True)
     firstname = Column(String)
     lastname = Column(String)
+    password = Column(String)
     age = Column(Integer)
-    books = relationship('Book', back_populates='user', cascade='save-update, merge, delete, delete-orphan')
+    books = relationship('Book', back_populates='user', secondary=user_book_association)
     # объект связи с таблицей Book
     # back_populates содержит в себе название объекта для связи
 
-
-print(CreateTable(User.__table__))
+# print(CreateTable(User.__table__))

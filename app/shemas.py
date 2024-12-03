@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class CreateUser(BaseModel):
@@ -23,8 +24,12 @@ class CreateBook(BaseModel):
 
 
 class UpdateBook(BaseModel):
-    title: str
-    description: str
-    author: str
-    genre: str
+    title: Optional[str]
+    description: Optional[str]
+    author: Optional[str]
+    genre: Optional[str]
+    completed: Optional[bool]
+
+
+class UpdateBookStatus(BaseModel):
     completed: bool
