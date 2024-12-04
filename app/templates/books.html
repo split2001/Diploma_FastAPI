@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Регистрация
+{% endblock %}
+
+{% block header %}
+    {{ super() }}
+{% endblock %}
+
+{% block navigation %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <a href="/book/create" class="btn btn-primary" style="margin-bottom: 20px;">Создать книгу</a>
+</div>
+<ul class="text-center" style="list-style-type: none;">
+{% for book in books %}
+    <li>
+        <h3>{{ book.title }}</h3>
+        <p>{{ book.description }}</p>
+        <p>Автор: {{book.author}}</p>
+        <p>Жанр: {{ book.genre}}</p>
+        <div class="text-center">
+            <a href="/book/add/{{book.id}}" class="btn btn-primary" style="margin-bottom: 20px;">Добавить в избранное</a>
+        </div>
+    </li>
+
+{% endfor %}
+</ul>
+{% endblock %}

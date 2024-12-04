@@ -5,25 +5,21 @@
 {% endblock %}
 
 {% block header %}
-{{ block.super }}
+    {{ super() }}
 {% endblock %}
 
 {% block navigation %}
-
+    {{ super() }}
 {% endblock %}
 
 {% block content %}
 <h1 class="text-center mb-4">Регистрация</h1>
 
-<!-- {% if error %}
+{% if error %}
     <p style="color: red;">{{ error }}</p>
-{% endif %} -->
-
-{% if success %}
-    <p style="color: green;">{{ success }}</p>
 {% endif %}
 
-<form class="text-center" method="post" action="/user/register">
+<form class='text-center' method="post" action="/user/register">
     <label for="username">Имя пользователя:</label><br>
     <input type="text" id="username" name="username" required><br><br>
 

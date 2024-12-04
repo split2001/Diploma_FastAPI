@@ -3,7 +3,7 @@ from app.backend.db import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import CreateTable
 from slugify import slugify
-from app.models.association import user_book_association
+from app.models.association import UserBook
 
 
 class User(Base):  # модель User, наследованная от ранее написанного Base
@@ -16,7 +16,8 @@ class User(Base):  # модель User, наследованная от ране
     lastname = Column(String)
     password = Column(String)
     age = Column(Integer)
-    books = relationship('Book', back_populates='user', secondary=user_book_association)
+    user_books = relationship('UserBook', back_populates='user')
+    books = relationship('Book',secondary='user_book', back_populates='users')
     # объект связи с таблицей Book
     # back_populates содержит в себе название объекта для связи
 

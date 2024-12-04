@@ -20,7 +20,7 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 from app.models.user import User
 from app.models.book import Book
-from app.models.association import *
+from app.models.association import UserBook
 from app.backend.db import Base
 target_metadata = Base.metadata
 

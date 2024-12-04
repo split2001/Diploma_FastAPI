@@ -2,8 +2,11 @@ from fastapi import FastAPI
 from app.routers import user, book
 from fastapi.templating import Jinja2Templates
 from fastapi.requests import Request
+from starlette.middleware.sessions import SessionMiddleware
 
 app = FastAPI()  # Создаем экземпляр приложения FastAPI
+
+app.add_middleware(SessionMiddleware, secret_key='a3f5e4c3d6b89e8f3e6eebdbf65fa1234567890abcfdef1234a1b2c3d4e5f6g7')
 
 app.include_router(user.router)
 app.include_router(book.router)  # подключаем дополнительные внешние роутеры
@@ -13,7 +16,7 @@ templates = Jinja2Templates(directory='app/templates')
 
 @app.get('/')
 async def main(request: Request):
-    return templates.TemplateResponse('base.html', {'request': request})
+    return templates.TemplateResponse('main.html', {'request': request})
 
 
 

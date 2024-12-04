@@ -35,15 +35,26 @@
 
     <nav>
         {% block navigation %}
-        <a href="/main" class="btn btn-outline-primary w-100 mb-2">Главная</a>
+        {% if username %}
+        {{ username }}
+        {% endif%}
+        <a href="/" class="btn btn-outline-primary w-100 mb-2">Главная</a>
+        {% if request.session.user_id %}
+        <a href="/book/library" class="btn btn-outline-success w-100 mb-2">Библиотека</a>
+        <a href="/book/author" class="btn btn-outline-success w-100 mb-2">Авторы</a>
+        <a href="/book/genre" class="btn btn-outline-success w-100 mb-2">Жанры</a>
+        <a href="/book/favorites" class="btn btn-outline-success w-100 mb-2">Избранное</a>
+        <a href="/user/logout" class="btn btn-outline-success w-100 mb-2">Выход</a>
+        {% else %}
         <a href="/user/register" class="btn btn-outline-success w-100 mb-2">Регистрация</a>
         <a href="/user/login" class="btn btn-outline-success w-100 mb-2">Авторизация</a>
+        {% endif %}
         {% endblock %}
     </nav>
 
-    <main class="container">
+    <main class="text-center">
         {% block content %}
-        <p></p>
+        <h3>Основное содержимое</h3>
         {% endblock %}
     </main>
 

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Избранное
+{% endblock %}
+
+{% block header %}
+    {{ super() }}
+{% endblock %}
+
+{% block navigation %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<h1>Избранные книги</h1>
+<ul class="text-center" style="list-style-type: none;">
+    {% for book in books %}
+    <li>
+        <h3>{{ book.title }}</h3>
+        <p>{{ book.description }}</p>
+        <p>Автор: {{ book.author }}</p>
+        <p>Жанр: {{ book.genre }}</p>
+        <p>Статус: {{ 'Прочитана' if book.user_books[0].is_read else 'Не прочитана' }}</p>
+        <div class="text-center">
+            <form action="/book/update_book_status/{{ book.id }}" method="post">
+                <button type="submit" class="btn btn-secondary">
+                    {{ 'Отметить как не прочитана' if book.user_books[0].is_read else 'Отметить как прочитана' }}
+                </button>
+            </form>
+            <a href="/book/delete_favorite/{{ book.id }}" class="btn btn-primary" style="margin-bottom: 20px;">Удалить из избранного</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
