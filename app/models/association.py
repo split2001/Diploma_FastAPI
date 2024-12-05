@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Table, Boolean
-from sqlalchemy.orm import relationship
-from app.backend.db import Base
+from sqlalchemy.orm import relationship  # связь с другими моделями
+from app.backend.db import Base  #
 
 
 # Промежуточная таблица для связи "многие ко многим"

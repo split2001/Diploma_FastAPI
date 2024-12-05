@@ -1,8 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from app.backend.db import Base
-from sqlalchemy.orm import relationship
-from sqlalchemy.schema import CreateTable
-from slugify import slugify
+from sqlalchemy.orm import relationship  # связь с другими моделями
+# from sqlalchemy.schema import CreateTable
 from app.models.association import UserBook
 
 
@@ -17,8 +16,8 @@ class User(Base):  # модель User, наследованная от ране
     password = Column(String)
     age = Column(Integer)
     user_books = relationship('UserBook', back_populates='user')
-    books = relationship('Book',secondary='user_book', back_populates='users')
-    # объект связи с таблицей Book
+    books = relationship('Book', secondary='user_book', back_populates='users')
+    # объект связи с таблицей Book, UserBook
     # back_populates содержит в себе название объекта для связи
 
 # print(CreateTable(User.__table__))

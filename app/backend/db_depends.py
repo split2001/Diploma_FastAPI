@@ -1,9 +1,9 @@
-from app.backend.db import SessionLocal
+from app.backend.db import SessionLocal  # сессия связи с БД
 
 
 async def get_db():
-    db = SessionLocal()
+    db = SessionLocal()  # Создаем сессию
     try:
-        yield db
+        yield db  # Возвращаем созданную сессию
     finally:
-        db.close()
+        db.close()  # закрываем сессию

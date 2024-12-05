@@ -14,7 +14,7 @@
 
 {% block content %}
 <div class="text-center">
-    <a href="/book/create" class="btn btn-primary" style="margin-bottom: 20px;">Создать книгу</a>
+    <a href="/book/create" class="btn btn-primary" style="margin-bottom: 20px;">Добавить книгу</a>
 </div>
 <ul class="text-center" style="list-style-type: none;">
 {% for book in books %}
@@ -24,10 +24,11 @@
         <p>Автор: {{book.author}}</p>
         <p>Жанр: {{ book.genre}}</p>
         <div class="text-center">
-            <a href="/book/add/{{book.id}}" class="btn btn-primary" style="margin-bottom: 20px;">Добавить в избранное</a>
+            <a href="/book/add/{{book.id}}" class="btn btn-primary" style="margin-bottom: 20px;">
+            {{ 'Удалить из избранное' if book in user.books else  'Добавить в избранное'}}
+            </a>
         </div>
     </li>
-
 {% endfor %}
 </ul>
 {% endblock %}

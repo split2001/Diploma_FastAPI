@@ -19,7 +19,7 @@
     <li>
         <h3>{{ book.title }}</h3>
         <p>{{ book.description }}</p>
-        <p>Автор: {{ book.author }}</p>
+        <p>Автор: {{book.author}}</p>
         <p>Жанр: {{ book.genre }}</p>
         <p>Статус: {{ 'Прочитана' if book.user_books[0].is_read else 'Не прочитана' }}</p>
         <div class="text-center">
