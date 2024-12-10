@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Регистрация
+Поиск по автору
 {% endblock %}
 
 {% block header %}
@@ -13,23 +13,37 @@
 {% endblock %}
 
 {% block content %}
-<h6>Поиск книг по автору:</h6>
-<form method="post" action="/book/author">
-    <label for="book_author">Введите имя автора:</label>
-    <input type="text" id="book_author" name="book_author" required>
-    <button type="submit">Поиск</button>
-</form>
-{% if error %}
-    <p style="color: red;">{{ error }}</p>
-{% endif %}
-<ul class="text-center" style="list-style-type: none;">
-{% for book in books %}
-    <li>
-        <h3>{{ book.title }}</h3>
-        <p>{{ book.description }}</p>
-        <p>{{ book.author}}</p>
-        <p>{{ book.genre}}</p>
-    </li>
-    {% endfor %}
-</ul>
+<div class="container mt-5">
+    <h6>Поиск книг по автору:</h6>
+    <form method="post" action="/book/author" class="mb-4">
+        <div class="form-group">
+            <label for="book_author">Введите имя автора:</label>
+            <input type="text" id="book_author" name="book_author" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Поиск</button>
+    </form>
+
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <h2 class="text-center mb-4">Результаты поиска</h2>
+
+    <ul class="list-unstyled">
+        {% for book in books %}
+            <li class="mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text">{{ book.description }}</p>
+                        <p><strong>Автор:</strong> {{ book.author }}</p>
+                        <p><strong>Жанр:</strong> {{ book.genre }}</p>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

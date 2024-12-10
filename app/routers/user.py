@@ -7,6 +7,7 @@ from typing import Annotated
 from app.shemas import CreateUser, UpdateUser
 from app.models.user import User
 from app.models.book import Book
+from app.models.association import UserBook
 # # Функции работы с записями.
 from sqlalchemy import select, insert, delete, update
 from passlib.context import CryptContext  # хеширование паролей
@@ -130,6 +131,7 @@ async def delete_user(db: Annotated[Session, Depends(get_db)], user_id: int):
             status_code=status.HTTP_404_NOT_FOUND,
             detail='Пользователь не найден'
         )
+    db.query(UserBook).filter(UserBook.user_id == user_id).delete()
     db.delete(user)
     db.commit()
     return {'status_code': status.HTTP_200_OK, 'transaction': 'Пользователь успешно удален!'}

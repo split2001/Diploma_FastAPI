@@ -13,24 +13,30 @@
 {% endblock %}
 
 {% block content %}
-<h1>Избранные книги</h1>
-<ul class="text-center" style="list-style-type: none;">
-    {% for book in books %}
-    <li>
-        <h3>{{ book.title }}</h3>
-        <p>{{ book.description }}</p>
-        <p>Автор: {{book.author}}</p>
-        <p>Жанр: {{ book.genre }}</p>
-        <p>Статус: {{ 'Прочитана' if book.user_books[0].is_read else 'Не прочитана' }}</p>
-        <div class="text-center">
-            <form action="/book/update_book_status/{{ book.id }}" method="post">
-                <button type="submit" class="btn btn-secondary">
-                    {{ 'Отметить как не прочитана' if book.user_books[0].is_read else 'Отметить как прочитана' }}
-                </button>
-            </form>
-            <a href="/book/delete_favorite/{{ book.id }}" class="btn btn-primary" style="margin-bottom: 20px;">Удалить из избранного</a>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
+<h1 class="text-center">Избранные книги</h1>
+<div class="container">
+    <div class="row">
+        {% for book in books %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text">{{ book.description }}</p>
+                        <p><strong>Автор:</strong> {{ book.author }}</p>
+                        <p><strong>Жанр:</strong> {{ book.genre }}</p>
+                        <p><strong>Статус:</strong> {{ 'Прочитана' if book.id in read_books else 'Не прочитана' }}</p>
+                        <div class="text-center">
+                            <form action="/book/update_book_status/{{ book.id }}" method="post">
+                                <button type="submit" class="btn btn-warning mb-2">
+                                    {{ 'Отметить как не прочитана' if book.id in read_books else 'Отметить как прочитана' }}
+                                </button>
+                            </form>
+                            <a href="/book/delete_favorite/{{ book.id }}" class="btn btn-danger">Удалить из избранного</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

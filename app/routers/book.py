@@ -132,8 +132,11 @@ async def delete_favorite(request: Request, book_id: int, db: Annotated[Session,
 
 @router.get('/favorites')
 async def favorite(request: Request, db: Annotated[Session, Depends(get_db)], user: User = Depends(get_current_user)):
-    return templates.TemplateResponse('favorites.html', {'request': request, 'books': user.books,
-                                                         'username': user.username})
+    user_books = db.query(Book).join(UserBook).filter(UserBook.user_id == user.id).all()
+    read_books = [user_book.book.id for user_book in
+                  db.query(UserBook).filter_by(user_id=user.id, is_read=True)]
+    return templates.TemplateResponse('favorites.html', {'request': request, 'books': user_books,
+                                                         'username': user.username, 'read_books': read_books})
 
 
 @router.post('/update_book_status/{book_id}')
@@ -150,7 +153,10 @@ async def update_book_status(request: Request, db: Annotated[Session, Depends(ge
     db.commit()  # сохраняем статус книги в БД
     # Объединяем таблицы. Получаем обновленный список книг пользователя с их статусами
     user_books = db.query(Book).join(UserBook).filter(UserBook.user_id == user.id).all()
-    return templates.TemplateResponse('favorites.html', {'request': request, 'books': user_books, 'user': user})
+    read_books = [user_book.book.id for user_book in
+                  db.query(UserBook).filter_by(user_id=user.id, is_read=True)]
+    return templates.TemplateResponse('favorites.html', {'request': request, 'books': user_books, 'user': user,
+                                                         'read_books': read_books})
 
 
 @router.delete('/delete')
@@ -162,6 +168,7 @@ async def delete_book(db: Annotated[Session, Depends(get_db)], book_id: int):
             status_code=status.HTTP_404_NOT_FOUND,
             detail='Книга не найдена'
         )
+    db.query(UserBook).filter(UserBook.book_id == book_id).delete()
     db.delete(book)
     db.commit()
     return {'status_code': status.HTTP_200_OK, 'transaction': 'Книга успешно удалена'}

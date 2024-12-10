@@ -16,7 +16,8 @@ pip install fastapi uvicorn
 main.py, в котором будет базовое приложение на FastAPI.
 
 Для запуска сервера, в терминале используйте команду :
-uvicorn app.main:app --reload
+uvicorn app.main:app
+
 
 создаем файл для настройки связи с БД.
 
